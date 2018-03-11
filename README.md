@@ -1,7 +1,7 @@
 # DuckChat
 DuckChat is a simple client-server program that uses UDP to cmmunicate. Users run client software to connect to a server and communicate
 with other connected users. Users join a channel and communicate with
-other users on the channel. Users may join as many channels as they want and can even create their own channels.
+other users on the channel. Users may join as many channels as they want and can even create their own channels. A multi-server version of this program ca be found [here](https://github.com/ssaleem/Duckchat/tree/multi-server)
 
 ## Installation
 - Use the Makefile to compile
