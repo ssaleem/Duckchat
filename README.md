@@ -1,11 +1,9 @@
-# DuckChat
-DuckChat is a simple client-server program that uses UDP to cmmunicate. Users run client software to connect to a server and communicate
-with other connected users. Users join a channel and communicate with
-other users on the channel. Users may join as many channels as they want and can even create their own channels.
+# DuckChat-multiServer
+This version of DuckChat uses multiple servers for scalability and supports inter-server communication. Separate broadcast trees are formed for each channel where nodes in the tree are servers listening to that channel. To guard against loops, inter-server messages include a unique identifier (generated randmly from `""/dev/urandom"`). Removing unnecessary servers from a channel is done in a lazy fashion. When a server is a leaf in tree with no users, it removes itself from the tree. To guard against network failures, every server renews its subscriptions once per minute.
 
 ## Installation
 - Use the Makefile to compile
-- To start server `./server server_host_name port_name`
+- To start server `./server server_host_name port_name [server1_host_name server1_port_name server2_host_name server2_port_name ...servern_host_name servern_port_name]`
 - To start client `./client server_host_name port_name user_name`
 
 ## Usage

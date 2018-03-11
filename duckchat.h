@@ -8,6 +8,7 @@
 
 #include <stdio.h>       //required for perror
 #include <stdlib.h>
+#include <inttypes.h>   //required for uint64_t
 
 /* This tells gcc to "pack" the structure.  Normally, gcc will
  * inserting padding into a structure if it feels it is convenient.
@@ -22,11 +23,14 @@
 #define COMMON "Common"
 #define BUFLEN 512
 #define KEEP_ALIVE 60
+#define SJOIN 60
 #define CLEANUP 120
+#define MAXSERVERS 20
 
 /* Define some types for designating request and text codes */
 typedef int request_t;
 typedef int text_t;
+typedef uint64_t s_id;  //For P2
 
 /* Define codes for request types.  These are the messages sent to the server. */
 #define REQ_LOGIN 0
@@ -37,6 +41,10 @@ typedef int text_t;
 #define REQ_LIST 5
 #define REQ_WHO 6
 #define REQ_KEEP_ALIVE 7 /* Only needed by graduate students */
+/* For Program 2 */
+#define SREQ_JOIN 8
+#define SREQ_LEAVE 9
+#define S_SAY 10
 
 /* Define codes for text types.  These are the messages sent to the client. */
 #define TXT_SAY 0
@@ -144,7 +152,24 @@ struct text_error {
     text_t txt_type; /* = TXT_ERROR */
     char txt_error[SAY_MAX]; // Error message
 };
+/* structs for program 2 */
+struct s_join {
+	request_t req_type; /* = SREQ_JOIN */
+    char req_channel[CHANNEL_MAX];
+} packed;
 
+struct s_leave {
+    request_t req_type; /* = SREQ_LEAVE */
+    char req_channel[CHANNEL_MAX];
+} packed;
+
+struct s_say {
+    request_t req_type; /* = S_SAY */
+    s_id say_id;
+    char txt_username[USERNAME_MAX];
+    char req_channel[CHANNEL_MAX];
+    char req_text[SAY_MAX];
+} packed;
 /*-----------------------------------------------------------------------------
  * Method: diep
  *---------------------------------------------------------------------------*/
