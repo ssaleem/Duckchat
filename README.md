@@ -1,5 +1,5 @@
 # DuckChat-multiServer
-This version of DuckChat uses multiple servers for scalability and supports inter-server communication. Separate broadcast trees are formed for each channel where nodes in the tree are servers listening to that channel. To guard against loops, inter-server messages include a unique identifier (generated randmly from `""/dev/urandom"`). Removing unnecessary servers from a channel is done in a lazy fashion. When a server is a leaf in tree with no users, it removes itself from the tree. To guard against network failures, every server renews its subscriptions once per minute.
+This version of DuckChat uses multiple servers for scalability and supports inter-server communication. Separate broadcast trees are formed for each channel where nodes in the tree are servers listening to that channel. To guard against loops, inter-server messages include a unique identifier (generated randmly from `/dev/urandom`). Removing unnecessary servers from a channel is done in a lazy fashion. When a server is a leaf in tree with no users, it removes itself from the tree. To guard against network failures, every server renews its subscriptions once per minute.
 
 ## Installation
 - Use the Makefile to compile
